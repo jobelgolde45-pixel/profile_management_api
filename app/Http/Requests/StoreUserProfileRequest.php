@@ -23,9 +23,9 @@ class StoreUserProfileRequest extends FormRequest
     {
         return [
             'user_id' => 'required|integer|exists:users,id|unique:user_profiles,user_id',
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'date_of_birth' => 'nullable|date|before:today',
+            'first_name' => 'nullable|string|max:50',
+            'last_name' => 'nullable|string|max:50',
+            'date_of_birth' => 'nullable|date',
             'gender' => 'nullable|in:male,female,other',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',

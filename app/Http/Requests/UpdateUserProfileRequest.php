@@ -24,9 +24,9 @@ class UpdateUserProfileRequest extends FormRequest
         $userId = $this->route('id') ? ',' . $this->route('id') : '';
 
         return [
-            'first_name' => 'sometimes|required|string|max:50',
-            'last_name' => 'sometimes|required|string|max:50',
-            'date_of_birth' => 'nullable|date|before:today',
+            'first_name' => 'sometimes|string|max:50',
+            'last_name' => 'sometimes|string|max:50',
+            'date_of_birth' => 'nullable|date',
             'gender' => 'nullable|in:male,female,other',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',

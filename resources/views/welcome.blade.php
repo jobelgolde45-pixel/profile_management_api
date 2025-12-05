@@ -846,15 +846,19 @@
             
             <footer>
                 <p>Profile Management API Interface &copy; 2023 | Built with Laravel</p>
-                <p>This is a frontend interface for testing API endpoints. Responses are simulated for demonstration.</p>
+                <p>This is a frontend interface for testing API endpoints.</p>
             </footer>
         </div>
 
         <div id="notification" class="notification"></div>
 
         <script>
-            // Base API URL - you would replace this with your actual API URL
+            // Base API URL - Change this to your actual API URL
+            // For Laravel, you can use relative URL if frontend is served from same domain
             const API_BASE_URL = '/api/profiles';
+            
+            // Add CSRF token for Laravel
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
             
             // DOM Elements
             const notification = document.getElementById('notification');
@@ -958,183 +962,7 @@
                 }
             }
             
-            // Simulate API call with delay
-            function simulateAPICall(action, data = null) {
-                return new Promise((resolve) => {
-                    // Simulate network delay
-                    setTimeout(() => {
-                        let response;
-                        
-                        switch(action) {
-                            case 'fetch-profiles':
-                                response = {
-                                    success: true,
-                                    data: [
-                                        {
-                                            id: 1,
-                                            user_id: 101,
-                                            date_of_birth: "1990-05-15",
-                                            gender: "male",
-                                            phone: "+1234567890",
-                                            country: "United States",
-                                            city: "New York",
-                                            address: "123 Main St",
-                                            bio: "Software developer with 10 years of experience",
-                                            status: "active",
-                                            avatar_url: "https://randomuser.me/api/portraits/men/1.jpg",
-                                            created_at: "2023-01-15T10:30:00Z",
-                                            updated_at: "2023-10-20T14:45:00Z",
-                                            user: {
-                                                id: 101,
-                                                name: "John Doe",
-                                                email: "john.doe@example.com"
-                                            }
-                                        },
-                                        {
-                                            id: 2,
-                                            user_id: 102,
-                                            date_of_birth: "1995-08-22",
-                                            gender: "female",
-                                            phone: "+0987654321",
-                                            country: "Canada",
-                                            city: "Toronto",
-                                            address: "456 Oak Ave",
-                                            bio: "Marketing specialist passionate about digital trends",
-                                            status: "active",
-                                            avatar_url: "https://randomuser.me/api/portraits/women/2.jpg",
-                                            created_at: "2023-02-20T09:15:00Z",
-                                            updated_at: "2023-09-10T11:20:00Z",
-                                            user: {
-                                                id: 102,
-                                                name: "Jane Smith",
-                                                email: "jane.smith@example.com"
-                                            }
-                                        }
-                                    ],
-                                    meta: {
-                                        current_page: 1,
-                                        last_page: 5,
-                                        per_page: 15,
-                                        total: 75,
-                                        from: 1,
-                                        to: 15
-                                    }
-                                };
-                                break;
-                                
-                            case 'create-profile':
-                                response = {
-                                    success: true,
-                                    message: "Profile created successfully",
-                                    data: {
-                                        id: Math.floor(Math.random() * 1000) + 3,
-                                        ...data,
-                                        avatar_url: data.avatar ? "https://randomuser.me/api/portraits/men/3.jpg" : null,
-                                        created_at: new Date().toISOString(),
-                                        updated_at: new Date().toISOString(),
-                                        user: {
-                                            id: data.user_id,
-                                            name: "Test User",
-                                            email: `user${data.user_id}@example.com`
-                                        }
-                                    }
-                                };
-                                break;
-                                
-                            case 'fetch-profile':
-                                response = {
-                                    success: true,
-                                    data: {
-                                        id: parseInt(data.id),
-                                        user_id: 105,
-                                        date_of_birth: "1988-12-10",
-                                        gender: "male",
-                                        phone: "+1122334455",
-                                        country: "United Kingdom",
-                                        city: "London",
-                                        address: "789 Park Lane",
-                                        bio: "Product manager with expertise in agile methodologies",
-                                        status: "active",
-                                        avatar_url: "https://randomuser.me/api/portraits/men/5.jpg",
-                                        created_at: "2023-03-10T16:20:00Z",
-                                        updated_at: "2023-10-05T09:30:00Z",
-                                        user: {
-                                            id: 105,
-                                            name: "Robert Johnson",
-                                            email: "robert.johnson@example.com"
-                                        }
-                                    }
-                                };
-                                break;
-                                
-                            case 'update-profile':
-                                response = {
-                                    success: true,
-                                    message: "Profile updated successfully",
-                                    data: {
-                                        id: parseInt(data.id),
-                                        ...data,
-                                        avatar_url: data.avatar ? "https://randomuser.me/api/portraits/men/updated.jpg" : "https://randomuser.me/api/portraits/men/5.jpg",
-                                        updated_at: new Date().toISOString(),
-                                        user: {
-                                            id: 105,
-                                            name: "Robert Johnson",
-                                            email: "robert.johnson@example.com"
-                                        }
-                                    }
-                                };
-                                break;
-                                
-                            case 'delete-profile':
-                                response = {
-                                    success: true,
-                                    message: `Profile with ID ${data.id} deleted successfully`
-                                };
-                                break;
-                                
-                            case 'fetch-by-user':
-                                response = {
-                                    success: true,
-                                    data: {
-                                        id: 4,
-                                        user_id: parseInt(data.userId),
-                                        date_of_birth: "1992-03-25",
-                                        gender: "female",
-                                        phone: "+4455667788",
-                                        country: "Australia",
-                                        city: "Sydney",
-                                        address: "321 Beach Rd",
-                                        bio: "UX designer focused on creating intuitive interfaces",
-                                        status: "active",
-                                        avatar_url: "https://randomuser.me/api/portraits/women/4.jpg",
-                                        created_at: "2023-04-05T14:10:00Z",
-                                        updated_at: "2023-08-15T13:25:00Z",
-                                        user: {
-                                            id: parseInt(data.userId),
-                                            name: "Emily Wilson",
-                                            email: "emily.wilson@example.com"
-                                        }
-                                    }
-                                };
-                                break;
-                                
-                            case 'update-status':
-                                response = {
-                                    success: true,
-                                    message: "Profile status updated successfully",
-                                    data: {
-                                        id: parseInt(data.id),
-                                        status: data.status,
-                                        updated_at: new Date().toISOString()
-                                    }
-                                };
-                                break;
-                        }
-                        
-                        resolve(response);
-                    }, 800); // 800ms delay to simulate network latency
-                });
-            }
+            // Real API calls - REPLACED THE SIMULATION WITH REAL FETCH CALLS
             
             // Event Listeners for API calls
             
@@ -1158,13 +986,20 @@
                 const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
                 
                 try {
-                    // In a real app, you would use fetch()
-                    // const response = await fetch(`${API_BASE_URL}${queryString}`);
-                    // const data = await response.json();
+                    const response = await fetch(`${API_BASE_URL}${queryString}`, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    });
                     
-                    const data = await simulateAPICall('fetch-profiles');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
                     displayResponse('all-profiles-response', data);
-                    showNotification(`Fetched ${data.data.length} profiles successfully`, 'success');
+                    showNotification(`Fetched ${data.data?.length || 0} profiles successfully`, 'success');
                 } catch (error) {
                     showNotification('Failed to fetch profiles: ' + error.message, 'error');
                     displayResponse('all-profiles-response', { success: false, error: error.message });
@@ -1182,36 +1017,44 @@
                 submitBtn.innerHTML = '<span class="loader"></span> Creating...';
                 submitBtn.disabled = true;
                 
-                // Get form data
-                const formData = {
-                    user_id: document.getElementById('user_id').value,
-                    date_of_birth: document.getElementById('date_of_birth').value,
-                    gender: document.getElementById('gender').value,
-                    phone: document.getElementById('phone').value,
-                    country: document.getElementById('country').value,
-                    city: document.getElementById('city').value,
-                    address: document.getElementById('address').value,
-                    bio: document.getElementById('bio').value,
-                    status: document.getElementById('status').value,
-                    avatar: avatarInput.files[0] ? true : false
-                };
+                // Create FormData object for file upload
+                const formData = new FormData();
+                
+                // Get form values and append to FormData
+                const formFields = [
+                    'user_id', 'date_of_birth', 'gender', 'phone', 
+                    'country', 'city', 'address', 'bio', 'status'
+                ];
+                
+                formFields.forEach(field => {
+                    const value = document.getElementById(field).value;
+                    if (value) {
+                        formData.append(field, value);
+                    }
+                });
+                
+                // Handle file upload
+                const avatarFile = document.getElementById('avatar').files[0];
+                if (avatarFile) {
+                    formData.append('avatar', avatarFile);
+                }
                 
                 try {
-                    // In a real app, you would use FormData for file upload
-                    // const formDataObj = new FormData();
-                    // for (const key in formData) {
-                    //     formDataObj.append(key, formData[key]);
-                    // }
-                    // if (avatarInput.files[0]) {
-                    //     formDataObj.append('avatar', avatarInput.files[0]);
-                    // }
-                    // const response = await fetch(API_BASE_URL, {
-                    //     method: 'POST',
-                    //     body: formDataObj
-                    // });
-                    // const data = await response.json();
+                    const response = await fetch(API_BASE_URL, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json'
+                        }
+                    });
                     
-                    const data = await simulateAPICall('create-profile', formData);
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
                     displayResponse('create-profile-response', data);
                     showNotification(data.message || 'Profile created successfully', 'success');
                     
@@ -1242,8 +1085,18 @@
                 this.disabled = true;
                 
                 try {
-                    // In a real app: const response = await fetch(`${API_BASE_URL}/${profileId}`);
-                    const data = await simulateAPICall('fetch-profile', { id: profileId });
+                    const response = await fetch(`${API_BASE_URL}/${profileId}`, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
                     displayResponse('single-profile-response', data);
                     showNotification('Profile fetched successfully', 'success');
                 } catch (error) {
@@ -1270,21 +1123,47 @@
                 submitBtn.innerHTML = '<span class="loader"></span> Updating...';
                 submitBtn.disabled = true;
                 
-                // Get form data
-                const formData = {
-                    id: profileId,
-                    date_of_birth: document.getElementById('update-date_of_birth').value,
-                    gender: document.getElementById('update-gender').value,
-                    phone: document.getElementById('update-phone').value,
-                    country: document.getElementById('update-country').value,
-                    bio: document.getElementById('update-bio').value,
-                    status: document.getElementById('update-status').value,
-                    avatar: document.getElementById('update-avatar').files[0] ? true : false
-                };
+                // Create FormData object for file upload
+                const formData = new FormData();
+                
+                // Get form values and append to FormData
+                const formFields = [
+                    'date_of_birth', 'gender', 'phone', 
+                    'country', 'bio', 'status'
+                ];
+                
+                formFields.forEach(field => {
+                    const value = document.getElementById(`update-${field}`).value;
+                    if (value) {
+                        formData.append(field, value);
+                    }
+                });
+                
+                // Handle file upload
+                const avatarFile = document.getElementById('update-avatar').files[0];
+                if (avatarFile) {
+                    formData.append('avatar', avatarFile);
+                }
+                
+                // Use PUT method for update
+                formData.append('_method', 'PUT');
                 
                 try {
-                    // In a real app: const response = await fetch(`${API_BASE_URL}/${profileId}`, { method: 'PUT', body: JSON.stringify(formData) });
-                    const data = await simulateAPICall('update-profile', formData);
+                    const response = await fetch(`${API_BASE_URL}/${profileId}`, {
+                        method: 'POST', // Laravel expects POST with _method=PUT
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
                     displayResponse('update-profile-response', data);
                     showNotification(data.message || 'Profile updated successfully', 'success');
                 } catch (error) {
@@ -1313,8 +1192,19 @@
                 this.disabled = true;
                 
                 try {
-                    // In a real app: const response = await fetch(`${API_BASE_URL}/${profileId}`, { method: 'DELETE' });
-                    const data = await simulateAPICall('delete-profile', { id: profileId });
+                    const response = await fetch(`${API_BASE_URL}/${profileId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
                     displayResponse('delete-profile-response', data);
                     showNotification(data.message || 'Profile deleted successfully', 'success');
                     document.getElementById('delete-id').value = '';
@@ -1340,8 +1230,18 @@
                 this.disabled = true;
                 
                 try {
-                    // In a real app: const response = await fetch(`${API_BASE_URL}/user/${userId}`);
-                    const data = await simulateAPICall('fetch-by-user', { userId });
+                    const response = await fetch(`${API_BASE_URL}/user/${userId}`, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
                     displayResponse('user-profile-response', data);
                     showNotification('Profile fetched successfully', 'success');
                 } catch (error) {
@@ -1367,8 +1267,21 @@
                 this.disabled = true;
                 
                 try {
-                    // In a real app: const response = await fetch(`${API_BASE_URL}/${profileId}/status`, { method: 'PATCH', body: JSON.stringify({ status: newStatus }) });
-                    const data = await simulateAPICall('update-status', { id: profileId, status: newStatus });
+                    const response = await fetch(`${API_BASE_URL}/${profileId}/status`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        body: JSON.stringify({ status: newStatus })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
                     displayResponse('status-update-response', data);
                     showNotification(data.message || 'Status updated successfully', 'success');
                 } catch (error) {
@@ -1380,15 +1293,15 @@
                 }
             });
             
-            // Initialize with some data
+            // Initialize with some sample data
             document.addEventListener('DOMContentLoaded', function() {
                 // Auto-populate some fields for demo purposes
                 document.getElementById('user_id').value = Math.floor(Math.random() * 1000) + 100;
                 document.getElementById('profile-id').value = 1;
-                document.getElementById('update-id').value = 5;
-                document.getElementById('delete-id').value = 3;
-                document.getElementById('user-id').value = 102;
-                document.getElementById('status-profile-id').value = 2;
+                document.getElementById('update-id').value = 1;
+                document.getElementById('delete-id').value = 1;
+                document.getElementById('user-id').value = 1;
+                document.getElementById('status-profile-id').value = 1;
                 
                 // Show a welcome notification
                 setTimeout(() => {

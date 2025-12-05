@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserProfileApi",
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "const": true
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer" },
+        "user_id": { "type": "integer" },
+        "first_name": { "type": ["string", "null"] },
+        "last_name": { "type": ["string", "null"] },
+        "date_of_birth": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "gender": {
+          "type": "string",
+          "enum": ["male", "female", "other"]
+        },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": ["string", "null"] },
+        "country": { "type": "string" },
+        "postal_code": { "type": ["string", "null"] },
+        "avatar_url": { "type": "string" },
+        "bio": { "type": "string" },
+        "timezone": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["active", "inactive", "suspended"]
+        },
+        "last_login_at": { "type": ["string", "null"], "format": "date-time" },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "integer" },
+            "name": { "type": "string" },
+            "email": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          "required": ["id", "name", "email"],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "user_id",
+        "date_of_birth",
+        "gender",
+        "phone",
+        "address",
+        "city",
+        "country",
+        "avatar_url",
+        "bio",
+        "timezone",
+        "status",
+        "created_at",
+        "updated_at",
+        "user"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": ["success", "data"],
+  "additionalProperties": false
+}
