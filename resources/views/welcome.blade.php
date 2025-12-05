@@ -475,7 +475,7 @@
         <div class="container">
             <header>
                 <h1><i class="fas fa-user-circle"></i> Profile Management API</h1>
-                <p class="subtitle">A modern interface to interact with the Profile Management API. Create, read, update, delete, and search user profiles through a responsive and intuitive interface.</p>
+                <p class="subtitle">SIA 2 - PROJECT</p>
                 
                 <div class="api-info">
                     <div class="endpoint-badge">

@@ -15,7 +15,6 @@ Route::prefix('profiles')->group(function () {
     Route::put('/{id}', [UserProfileController::class, 'update']);
     Route::delete('/{id}', [UserProfileController::class, 'destroy']);
     
-    // Additional custom routes
     Route::get('/user/{userId}', [UserProfileController::class, 'getByUserId']);
     Route::patch('/{id}/status', [UserProfileController::class, 'updateStatus']);
 });
