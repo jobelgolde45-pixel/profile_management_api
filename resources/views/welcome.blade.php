@@ -469,6 +469,21 @@
                 color: white;
                 border-color: var(--primary);
             }
+            .xml-container{
+                width: 100%;
+                display:flex;
+                flex-direction: row;
+                justify-content: center;
+                align-self: center;
+                margin-bottom: 3rem;
+            }
+            .xml-page{
+                background: #4361ee;
+                padding: .5rem 1rem;
+                border-radius: 10px;
+                text-decoration: none;
+                color: #fff;
+            }
         </style>
     </head>
     <body>
@@ -499,7 +514,11 @@
                         <span>/api/profiles/{id}</span>
                     </div>
                 </div>
+
             </header>
+                <div class="xml-container">
+                    <a href="{{ route('xml.page') }}" class="xml-page">XML page</a>
+                </div>
 
             <div class="main-content">
                 <div class="forms-section">
@@ -843,11 +862,7 @@
                     </div>
                 </div>
             </div>
-            
-            <footer>
-                <p>Profile Management API Interface &copy; 2023 | Built with Laravel</p>
-                <p>This is a frontend interface for testing API endpoints.</p>
-            </footer>
+        
         </div>
 
         <div id="notification" class="notification"></div>
